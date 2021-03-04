@@ -7,7 +7,9 @@ Criado por José Elias G. Lima
 crie o diretório da aplicação, caso baixe o zip
 Ex. $mdkir financeiro
 ou clone:
+```
    $git clone <Projeto>
+```
 entre no mesmo:
     $cd financeiro
 crie o ambiente virtual
