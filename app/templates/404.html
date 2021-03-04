@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block pagestyles %}
+{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css')}}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css')}}">
+{% endblock %}
+
+{% block container %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="error-template">
+				<h1>Oops!</h1>
+				<h2>404 Not Found</h2>
+				<div class="error-details">
+					Desculpe, ocorreu um erro, tente outra página, esta não existe!
+
+				</div>
+				<div class="error-actions">
+					<a href="{{url_for('pages.home')}}" class="btn btn-primary bnt-lg"><i class="fa fa-home"></i>Voltar para página inicial</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

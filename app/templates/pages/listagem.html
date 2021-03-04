@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+{% endblock %}
+
+{%block pagestyles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tabela.css')}}">
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="grid-container">
+    <div style="margin-top: 20px;">
+        <div id="alert"></div>
+        <h4>Tabela de Lançamentos</h4>
+        <section class="listagem">
+            <table id="tblEditavel">
+                <thead>
+                    <tr class="header">
+                        <td width="20">#</td>
+                        <td width="100">Tipo</td>
+                        <td width="200">Categoria</td>
+                        <td width="450">Descrição</td>
+                        <td width="50">Valor</td>
+                        <td width="50">Data</td>
+                        <td colspan="2">Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td data-id="{{row.id}}">{{ row.id }}</td>
+                        <td class="editavel">{{ row.tipo|capitalize}}</td>
+                        <td class="editavel">{{ row.categoria|capitalize }}</td>
+                        <td class="editavel">{{ row.descricao}}</td>
+                        <td class="editavel">{{ row.valor|moneyfilter }}</td>
+                        <td class="editavel">{{ row.data_lancamento|datefilter }}</td>
+                        <td  colspan="2" style="text-align: center; font-size: 21px; color: #cc4b37;"><a href="#" class="deletar"><i
+                                    class="fi-trash"></i></a></td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <a href="#" class="adicionar">
+                                <i class="fi-plus" style="color: blue; font-size: 15px;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+
+        {% endblock %}
+
+        {% block script %}
+        {{ super() }}
+        <script src="{{ url_for('static', filename='js/script2.js') }}"></script>
+        <script>
+            $(document).foundation();
+        </script>
+        {% endblock %}

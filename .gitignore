@@ -1,0 +1,5 @@
+# Para todos os arquivos e sub-pastas de venv/
+venv/
+
+# Para todos os arquivos e subpastas migrations
+migrations/

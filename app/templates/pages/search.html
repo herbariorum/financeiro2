@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% import "_macro.html" as macros %}
+
+{% block head %}
+{{ super() }}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+{% endblock %}
+
+
+{%block pagestyles %}
+{{ super() }}
+<style>
+    .bd {
+        padding: 1.5rem;
+        margin-right: 0;
+        margin-left: 0;
+        border-width: 1px;
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+        position: relative;
+        margin: 1rem -.75rem 0;
+        border: solid #dee2e6;
+    }
+
+    .salvar {
+        margin-right: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container">
+    <div style="margin-top: 20px;">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flashes" id="mensagem" style="list-style-type: none;">
+                    {% for message in messages %}
+                        <li>{{message}}</li>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+                    
+        <div id="alert"></div>
+        <div class="row">
+            <div class="col">
+                <h4 class="col">{{ msg }}</h4>
+            </div>
+            <div class="col">
+                <div class="input-group">                    
+                    <div style="margin-left: 20px;">
+                        <a class="btn btn-secondary reload" href="{{ url_for('pages.index')}}"><i class="fas fa-sync-alt"></i> </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bd">
+            <table class="table" id="tblEditavel">
+                <thead>
+                    <tr class="header">
+                        <td width="20">#</td>
+                        <td width="100">Tipo</td>
+                        <td width="200">Categoria</td>
+                        <td width="450">Descrição</td>
+                        <td width="50">Valor</td>
+                        <td width="50">Data</td>
+                        <td width="20">Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if rows %}
+                        {% for row in rows %}
+                        <tr>
+                            <td data-id={{row.id}}>{{ row.id }}</td>
+                            <td class="editavel">{{ row.tipo|capitalize}}</td>
+                            <td class="editavel">{{ row.categoria|capitalize }}</td>
+                            <td class="editavel">{{ row.descricao}}</td>
+                            <td class="editavel">{{ row.valor|moneyfilter }}</td>
+                            <td class="editavel">{{ row.data_lancamento|datefilter }}</td>
+                            <td class="actions" style="text-align: center;">
+                                <a href="#" class="remover">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7">Não foram encontrados dados</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <a href="#" class="adicionar" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Adicionar registro">
+                                <i class="fas fa-plus" style="color: blue; font-size: 21px;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            {% if pagination %}
+            <nav aria-label="Página navegação">
+                {{ macros.pagination_widget(pagination, '.search') }}
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+{{ super() }}
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+{% endblock %}
